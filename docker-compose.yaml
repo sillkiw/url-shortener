@@ -1,0 +1,11 @@
+services:
+    postgres:
+        image: postgres:latest 
+        environment:
+            POSTGRES_DB : "urldb"
+            POSTGRES_USER: "sillkiw"
+            POSTGRES_PASSWORD: "123qweasdzxc"
+        volumes:
+            - ./db:/docker-entrypoint-initdb.d:ro,Z
+        ports:
+            - "5432:5432"
