@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS short_links (
     id BIGSERIAL PRIMARY KEY,
-    slug TEXT NOT NULL UNIQUE,
+    alias TEXT NOT NULL UNIQUE,
     original_url TEXT NOT NULL UNIQUE
 );
 
-
+CREATE INDEX IF NOT EXISTS idx_alias ON short_links(alias)
