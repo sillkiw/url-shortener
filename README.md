@@ -1,20 +1,65 @@
-# URL shortener REST API
-1. Create Short Link
-    Endpoint: `POST /url`
-    Payload: 
-    ```json
-    {"url": "https://example.com/path", "alias": "custom-id"} (alias is optional)
-    ```
-    Behavior: Validates the URL, generates a random alias if not provided, and saves to DB.
-    Returns: 201 Created with the short link data.
+# URL Shortener REST API
 
-2. Redirect to Original
-    Endpoint: `GET /{alias}`
-    Behavior: Look up the original URL by alias and perform a 302 Found redirect.
-    Returns: 404 Not Found if the alias does not exist.
+## 1) Create short link
 
-3. Delete Link (Admin)
-    Endpoint: `DELETE /admin/{alias}`
-    Authentication: Basic Auth required.
-    Behavior: Removes the entry from the database.
-    Returns: 204 No Content or 401 Unauthorized.
+**Endpoint:** `POST /url`
+**Content-Type:** `application/json`
+
+**Request body:**
+
+```json
+{
+  "url": "https://example.com/path",
+  "alias": "custom-id"
+}
+```
+
+* `alias` — optional. If omitted, the service generates a random one.
+
+**Behavior:**
+
+* Validates `url`
+* Generates an alias (if not provided)
+* Saves the mapping to the database
+
+**Response:** `201 Created`
+
+```json
+{
+  "status": "ok",
+  "alias": "custom-id",
+}
+```
+
+---
+
+## 2) Redirect to original URL
+
+**Endpoint:** `GET /{alias}`
+
+**Behavior:**
+
+* Looks up `{alias}` in the database
+* Redirects to the original URL
+
+**Response:**
+
+* `302 Found` with `Location: <original_url>`
+* `404 Not Found` if alias does not exist
+
+---
+
+## 3) Delete link (admin)
+
+**Endpoint:** `DELETE /admin/{alias}`
+**Auth:** Basic Auth
+
+**Behavior:**
+
+* Deletes `{alias}` from the database
+
+**Response:**
+
+* `204 No Content` on success
+* `401 Unauthorized` if credentials are missing/invalid
+* `404 Not Found` if alias does not exist
