@@ -1,6 +1,6 @@
 # URL Shortener REST API
 
-## 1) Create short link
+## Create short link
 
 **Endpoint:** `POST /url`
 **Content-Type:** `application/json`
@@ -31,9 +31,8 @@
 }
 ```
 
----
 
-## 2) Redirect to original URL
+## Redirect to original URL
 
 **Endpoint:** `GET /{alias}`
 
@@ -47,9 +46,8 @@
 * `302 Found` with `Location: <original_url>`
 * `404 Not Found` if alias does not exist
 
----
 
-## 3) Delete link (admin)
+## Delete link (admin)
 
 **Endpoint:** `DELETE /admin/{alias}`
 **Auth:** Basic Auth
